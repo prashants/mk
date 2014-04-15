@@ -1,0 +1,11 @@
+; compile to object file
+nasm -f elf32 kernel.asm -o kasm.o
+gcc -m32 -c kernel.c -o kc.o
+
+; link
+ld -m elf_i386 -T link.ld -o kernel kasm.o kc.o
+
+; grub
+title mkernel
+  root(hd0, 0)
+  kernel /boot/kernel ro
